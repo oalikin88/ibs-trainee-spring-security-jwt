@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserRole.EMPLOYEE;
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserRole.MANAGER;
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserRole.TRAINEE;
+import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserRole.*;
 
 @RequiredArgsConstructor
 @Service("fake")
@@ -52,6 +50,15 @@ public class FakeApplicationUserDao implements ApplicationUserDao {
                         "emma",
                         passwordEncoder.encode("password123"),
                         TRAINEE.getAuthorities(),
+                        true,
+                        true,
+                        true,
+                        true
+                ),
+                new ApplicationUser(
+                        "tom",
+                        passwordEncoder.encode("123"),
+                        SCRUMMASTER.getAuthorities(),
                         true,
                         true,
                         true,

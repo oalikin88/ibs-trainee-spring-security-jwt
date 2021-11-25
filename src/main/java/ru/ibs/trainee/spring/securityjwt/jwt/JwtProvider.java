@@ -23,16 +23,26 @@ import java.util.stream.Collectors;
 @Component
 public class JwtProvider {
 
-    private final static String BEARER_PREFIX = "Bearer ";
-    private final static String KEY = "securesecuresecuresecuresecuresecuresecures";
+    private final static String BEARER_PREFIX = "Bearer "; // префикс токена
+    private final static String KEY = "securesecuresecuresecuresecuresecuresecures"; // секретный ключ
 
-    public String createToken(Authentication authentication) {
-        return BEARER_PREFIX +  Jwts.builder()
-                .setSubject(authentication.getName())
+    public String createToken(Authentication authentication) { // генерация токена
+        return BEARER_PREFIX +  Jwts.builder() // префикс + билдер
+                .setSubject(authentication.getName()) //заключаем в токен имя и права
                 .claim("authorities", authentication.getAuthorities())
-                .setIssuedAt(new Date())
+                .setIssuedAt(new Date()) // устанавливаем сегодняшнюю дату
                 .setExpiration(java.sql.Date.valueOf(LocalDateTime.now().toLocalDate().plusWeeks(1)))
-                .signWith(Keys.hmacShaKeyFor(KEY.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(KEY.getBytes())) // шифровка ключа
+                .compact();
+    }
+
+    public String createRefreshToken(Authentication authentication) { // генерация токена
+        return BEARER_PREFIX +  Jwts.builder() // префикс + билдер
+                .setSubject(authentication.getName()) //заключаем в токен имя и права
+                .claim("authorities", authentication.getAuthorities())
+                .setIssuedAt(new Date()) // устанавливаем сегодняшнюю дату
+                .setExpiration(java.sql.Date.valueOf(LocalDateTime.now().toLocalDate().plusDays(30)))
+                .signWith(Keys.hmacShaKeyFor(KEY.getBytes())) // шифровка ключа
                 .compact();
     }
 

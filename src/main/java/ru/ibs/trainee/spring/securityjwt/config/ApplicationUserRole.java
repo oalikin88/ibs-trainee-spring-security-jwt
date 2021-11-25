@@ -7,15 +7,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserPermission.EMPLOYEE_READ;
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserPermission.EMPLOYEE_WRITE;
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserPermission.TASK_READ;
-import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserPermission.TASK_WRITE;
+import static ru.ibs.trainee.spring.securityjwt.config.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
     EMPLOYEE(Sets.newHashSet(EMPLOYEE_READ, TASK_READ, TASK_WRITE)),
     MANAGER(Sets.newHashSet(EMPLOYEE_READ, EMPLOYEE_WRITE, TASK_READ, TASK_WRITE)),
-    TRAINEE(Sets.newHashSet(TASK_READ, EMPLOYEE_READ));
+    TRAINEE(Sets.newHashSet(TASK_READ, EMPLOYEE_READ)),
+    SCRUMMASTER(Sets.newHashSet(TASK_WRITE, EMPLOYEE_READ));
 
     private final Set<ApplicationUserPermission> permissions;
 
